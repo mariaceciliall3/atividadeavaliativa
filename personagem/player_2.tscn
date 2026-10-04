@@ -71,8 +71,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pwgdi"]
-size = Vector2(7, 26)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_teshn"]
+height = 38.0
 
 [node name="player2" type="CharacterBody2D" unique_id=1046224542]
 script = ExtResource("1_6epyc")
@@ -85,5 +85,5 @@ animation = &"frente"
 autoplay = "frente"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2134965662]
-position = Vector2(-0.5, 1)
-shape = SubResource("RectangleShape2D_pwgdi")
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_teshn")

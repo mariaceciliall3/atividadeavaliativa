@@ -83,15 +83,20 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yqxax"]
-radius = 24.0
-height = 144.0
+radius = 15.0
+height = 56.0
 
 [node name="portal" type="Area2D" unique_id=1974042170]
 script = ExtResource("1_jl8kn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=166954414]
+position = Vector2(1, -3.0000038)
+scale = Vector2(0.21718751, 0.23125)
 sprite_frames = SubResource("SpriteFrames_yqxax")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1106691242]
+position = Vector2(1, -3)
 shape = SubResource("CapsuleShape2D_yqxax")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
