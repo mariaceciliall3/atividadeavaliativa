@@ -3,22 +3,15 @@
 [ext_resource type="Script" uid="uid://f0iocxos55ik" path="res://personagem/player_2.gd" id="1_6epyc"]
 [ext_resource type="Texture2D" uid="uid://dhlldr55piyr3" path="res://assets/novo/personagem 2/player_side_sheet.png" id="2_q70pm"]
 [ext_resource type="Texture2D" uid="uid://bct2xqe7kwtq0" path="res://assets/novo/personagem 2/player_front_sheet.png" id="3_6epyc"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2rv8a"]
-atlas = ExtResource("2_q70pm")
-region = Rect2(0, 0, 224, 320)
+[ext_resource type="Texture2D" uid="uid://be5kdwr3xhbd4" path="res://assets/novo/personagem 2/jump_player2.png" id="4_6epyc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h86c1"]
 atlas = ExtResource("2_q70pm")
-region = Rect2(224, 0, 224, 320)
+region = Rect2(0, 0, 224, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xdqqo"]
 atlas = ExtResource("2_q70pm")
 region = Rect2(448, 0, 224, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hg2yd"]
-atlas = ExtResource("2_q70pm")
-region = Rect2(672, 0, 224, 320)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fp3y7"]
 atlas = ExtResource("3_6epyc")
@@ -28,27 +21,25 @@ region = Rect2(0, 0, 280, 400)
 atlas = ExtResource("3_6epyc")
 region = Rect2(280, 0, 280, 400)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k1ps8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rv8a"]
 atlas = ExtResource("2_q70pm")
 region = Rect2(224, 0, 224, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6epyc"]
+atlas = ExtResource("4_6epyc")
+region = Rect2(448, 0, 224, 320)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_sp125"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2rv8a")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_h86c1")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_xdqqo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hg2yd")
 }],
 "loop": 1,
-"name": &"andando ",
+"name": &"correr",
 "speed": 5.0
 }, {
 "frames": [{
@@ -64,15 +55,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k1ps8")
+"texture": SubResource("AtlasTexture_2rv8a")
 }],
 "loop": 1,
-"name": &"pulo",
+"name": &"parado",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6epyc")
+}],
+"loop": 1,
+"name": &"pular",
 "speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_teshn"]
-height = 38.0
+radius = 9.0
 
 [node name="player2" type="CharacterBody2D" unique_id=1046224542]
 script = ExtResource("1_6epyc")
@@ -81,8 +80,8 @@ script = ExtResource("1_6epyc")
 position = Vector2(0, -1)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_sp125")
-animation = &"frente"
-autoplay = "frente"
+animation = &"parado"
+autoplay = "parado"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2134965662]
 position = Vector2(0, -1)
