@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dt6jnxel7p8e8"]
 
-[ext_resource type="Texture2D" uid="uid://vx4dncqamasi" path="res://assets/novo/personagem 1/side.png" id="1_7g6hr"]
+[ext_resource type="Texture2D" uid="uid://vx4dncqamasi" path="res://assets/personagens/player_1/side.png" id="1_7g6hr"]
 [ext_resource type="Script" uid="uid://b65kfc7dgbtx3" path="res://personagem/player_1.gd" id="1_teshn"]
-[ext_resource type="Texture2D" uid="uid://kj38i8fm8byr" path="res://assets/novo/personagem 1/back.png" id="2_teshn"]
-[ext_resource type="Texture2D" uid="uid://dv3gw4i5wjgpp" path="res://assets/novo/personagem 1/front.png" id="3_cfcw2"]
-[ext_resource type="Texture2D" uid="uid://byo4kktvr60qy" path="res://assets/novo/personagem 1/jump_player1.png" id="5_cfcw2"]
+[ext_resource type="Texture2D" uid="uid://kj38i8fm8byr" path="res://assets/personagens/player_1/back.png" id="2_teshn"]
+[ext_resource type="Texture2D" uid="uid://dv3gw4i5wjgpp" path="res://assets/personagens/player_1/front.png" id="3_cfcw2"]
+[ext_resource type="Texture2D" uid="uid://byo4kktvr60qy" path="res://assets/personagens/player_1/jump_player1.png" id="5_cfcw2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_teshn"]
 atlas = ExtResource("2_teshn")
@@ -118,7 +118,9 @@ animations = [{
 radius = 62.000454
 height = 173.99905
 
-[node name="player1" type="CharacterBody2D" unique_id=880760336]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_cfcw2"]
+
+[node name="player1" type="CharacterBody2D" unique_id=880760336 groups=["players"]]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_teshn")
 
@@ -134,3 +136,6 @@ autoplay = "parado_direita"
 position = Vector2(-3, -13.000002)
 rotation = 3.1414385
 shape = SubResource("CapsuleShape2D_8gg7e")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=169091582]
+replication_config = SubResource("SceneReplicationConfig_cfcw2")

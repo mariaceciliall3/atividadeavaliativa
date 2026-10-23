@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://byo4kktvr60qy"
-path="res://.godot/imported/jump_player1.png-9efc1abc08360b1ebff3d36784648c1b.ctex"
+uid="uid://dhlldr55piyr3"
+path="res://.godot/imported/player_side_sheet.png-fee7ecdfe40eb08d39a818f5a21bee8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/novo/personagem 1/jump_player1.png"
-dest_files=["res://.godot/imported/jump_player1.png-9efc1abc08360b1ebff3d36784648c1b.ctex"]
+source_file="res://assets/personagens/player_2/player_side_sheet.png"
+dest_files=["res://.godot/imported/player_side_sheet.png-fee7ecdfe40eb08d39a818f5a21bee8b.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://f8lwja8oxqqi"]
 
 [ext_resource type="Texture2D" uid="uid://ck7axjley3ffe" path="res://assets/Seasonal Tilesets/3 - Tropics/portal/frame-1.png" id="1_0a7dg"]
-[ext_resource type="Script" uid="uid://iikssv0421c4" path="res://portal.gd" id="1_jl8kn"]
+[ext_resource type="Script" uid="uid://iikssv0421c4" path="res://scripts/portal.gd" id="1_jl8kn"]
 [ext_resource type="Texture2D" uid="uid://c51fnpx2nawjs" path="res://assets/Seasonal Tilesets/3 - Tropics/portal/frame-2.png" id="2_jl8kn"]
 [ext_resource type="Texture2D" uid="uid://drwppitjurbwu" path="res://assets/Seasonal Tilesets/3 - Tropics/portal/frame-3.png" id="3_3x30s"]
 [ext_resource type="Texture2D" uid="uid://bq4hmvsrsiqgl" path="res://assets/Seasonal Tilesets/3 - Tropics/portal/frame-4.png" id="4_byaht"]

@@ -1,11 +1,11 @@
-[gd_scene format=4 uid="uid://c5i8kweeweb5h"]
+[gd_scene format=4 uid="uid://bpv7q1j4nhafg"]
 
 [ext_resource type="Texture2D" uid="uid://cv2gsu4aa7q88" path="res://assets/Seasonal Tilesets/1 - Grassland/Terrain (16 x 16).png" id="1_5s2kv"]
 [ext_resource type="PackedScene" uid="uid://dt6jnxel7p8e8" path="res://personagem/player_1.tscn" id="1_ny45v"]
 [ext_resource type="PackedScene" uid="uid://j7fube6h3bb2" path="res://personagem/player_2.tscn" id="2_tggv0"]
 [ext_resource type="Texture2D" uid="uid://dt1cuaucijc8u" path="res://assets/Seasonal Tilesets/1 - Grassland/Extra_plants (16 x 16).png" id="2_urf38"]
 [ext_resource type="Texture2D" uid="uid://cf2v853vvkf1g" path="res://assets/Seasonal Tilesets/5 - Misc. universal tiles/Flowers (16 x 16).png" id="4_tggv0"]
-[ext_resource type="PackedScene" uid="uid://f8lwja8oxqqi" path="res://portal.tscn" id="5_eb6rn"]
+[ext_resource type="PackedScene" path="res://cenas/portal.tscn" id="5_eb6rn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ny45v"]
 texture = ExtResource("1_5s2kv")

@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://j7fube6h3bb2"]
 
 [ext_resource type="Script" uid="uid://f0iocxos55ik" path="res://personagem/player_2.gd" id="1_6epyc"]
-[ext_resource type="Texture2D" uid="uid://dhlldr55piyr3" path="res://assets/novo/personagem 2/player_side_sheet.png" id="2_q70pm"]
-[ext_resource type="Texture2D" uid="uid://bct2xqe7kwtq0" path="res://assets/novo/personagem 2/player_front_sheet.png" id="3_6epyc"]
-[ext_resource type="Texture2D" uid="uid://be5kdwr3xhbd4" path="res://assets/novo/personagem 2/jump_player2.png" id="4_6epyc"]
+[ext_resource type="Texture2D" uid="uid://dhlldr55piyr3" path="res://assets/personagens/player_2/player_side_sheet.png" id="2_q70pm"]
+[ext_resource type="Texture2D" uid="uid://bct2xqe7kwtq0" path="res://assets/personagens/player_2/player_front_sheet.png" id="3_6epyc"]
+[ext_resource type="Texture2D" uid="uid://be5kdwr3xhbd4" path="res://assets/personagens/player_2/jump_player2.png" id="4_6epyc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_h86c1"]
 atlas = ExtResource("2_q70pm")
@@ -73,7 +73,24 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_teshn"]
 radius = 9.0
 
-[node name="player2" type="CharacterBody2D" unique_id=1046224542]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6epyc"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:velocity")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedSprite2D:animation")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("AnimatedSprite2D:frame")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimatedSprite2D:flip_h")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+
+[node name="player2" type="CharacterBody2D" unique_id=1046224542 groups=["players"]]
 script = ExtResource("1_6epyc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=549758013]
@@ -86,3 +103,6 @@ autoplay = "parado"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2134965662]
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_teshn")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1047711102]
+replication_config = SubResource("SceneReplicationConfig_6epyc")

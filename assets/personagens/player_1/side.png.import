@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kj38i8fm8byr"
-path="res://.godot/imported/back.png-0c5274fc38c3758b01ca4d8e9976643e.ctex"
+uid="uid://vx4dncqamasi"
+path="res://.godot/imported/side.png-ee15b4a83b8bf9583d662db7e21ee060.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/novo/personagem 1/back.png"
-dest_files=["res://.godot/imported/back.png-0c5274fc38c3758b01ca4d8e9976643e.ctex"]
+source_file="res://assets/personagens/player_1/side.png"
+dest_files=["res://.godot/imported/side.png-ee15b4a83b8bf9583d662db7e21ee060.ctex"]
 
 [params]
 

@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://bwrab73xnast1"]
+
+[ext_resource type="Script" uid="uid://cq56vvkw14i7f" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://3aul85vv4gb" path="res://cenas/level.tscn" id="1_ig7tw"]
+
+[node name="Main" type="Node2D" unique_id=1246456078]
+script = ExtResource("1_0xm2m")
+
+[node name="Level" parent="." unique_id=549040144 instance=ExtResource("1_ig7tw")]
+
+[node name="SpawnHost" type="Marker2D" parent="." unique_id=1118706335]
+position = Vector2(231, 547)
+
+[node name="SpawnClient" type="Marker2D" parent="." unique_id=28857996]
+position = Vector2(751, 548)
+
+[node name="Players" type="Node2D" parent="." unique_id=829081512]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=939798323]
+_spawnable_scenes = PackedStringArray("uid://dt6jnxel7p8e8", "uid://j7fube6h3bb2")
+spawn_path = NodePath("../Players")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1610955608]
+
+[node name="Interface" type="Control" parent="CanvasLayer" unique_id=996198855]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HostButton" type="Button" parent="CanvasLayer/Interface" unique_id=1322727387]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 74.0
+offset_right = 921.0
+offset_bottom = 105.0
+text = "Criar Servidor"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/Interface" unique_id=1411884647]
+layout_mode = 0
+offset_left = 957.0
+offset_top = 73.0
+offset_right = 1098.0
+offset_bottom = 104.0
+text = "Entrar na Partida"
+
+[node name="AddressLineEdit" type="LineEdit" parent="CanvasLayer/Interface" unique_id=1055175136]
+layout_mode = 0
+offset_left = 908.0
+offset_top = 36.0
+offset_right = 989.0
+offset_bottom = 67.0
+text = "127.0.0.1"
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer/Interface" unique_id=606032163]
+layout_mode = 0
+offset_left = 859.0
+offset_top = 7.0
+offset_right = 1026.0
+offset_bottom = 30.0
+text = "Aguardando Conexão"
