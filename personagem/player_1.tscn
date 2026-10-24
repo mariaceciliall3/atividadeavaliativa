@@ -137,5 +137,18 @@ position = Vector2(-3, -13.000002)
 rotation = 3.1414385
 shape = SubResource("CapsuleShape2D_8gg7e")
 
+[node name="NomeLabel" type="Label" parent="." unique_id=1736201101]
+offset_left = -300.0
+offset_top = -225.0
+offset_right = -180.0
+offset_bottom = -205.0
+scale = Vector2(5, 5)
+theme_override_colors/font_color = Color(0.3, 0.6, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "Player 1 (Host)"
+horizontal_alignment = 1
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=169091582]
 replication_config = SubResource("SceneReplicationConfig_cfcw2")

@@ -104,5 +104,17 @@ autoplay = "parado"
 position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_teshn")
 
+[node name="NomeLabel" type="Label" parent="." unique_id=1736201102]
+offset_left = -60.0
+offset_top = -42.0
+offset_right = 60.0
+offset_bottom = -22.0
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 12
+text = "Player 2 (Cliente)"
+horizontal_alignment = 1
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1047711102]
 replication_config = SubResource("SceneReplicationConfig_6epyc")

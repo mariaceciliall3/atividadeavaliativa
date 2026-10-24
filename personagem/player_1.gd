@@ -11,6 +11,9 @@ const VOID_Y = 700.0
 var spawn_position: Vector2
 var ultima_direcao = 1
 
+# Posicao que vai pela rede (o outro jogador desliza ate ela)
+var posicao_rede: Vector2
+
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int(), true)
@@ -18,6 +21,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	spawn_position = global_position
+	posicao_rede = position
 	configurar_sincronizacao()
 
 
@@ -25,7 +29,7 @@ func configurar_sincronizacao() -> void:
 	var configuracao := SceneReplicationConfig.new()
 
 	var propriedades = [
-		NodePath(".:position"),
+		NodePath(".:posicao_rede"),
 		NodePath(".:velocity"),
 		NodePath("AnimatedSprite2D:animation")
 	]
@@ -34,7 +38,7 @@ func configurar_sincronizacao() -> void:
 		configuracao.add_property(propriedade)
 
 	configuracao.property_set_replication_mode(
-		NodePath(".:position"),
+		NodePath(".:posicao_rede"),
 		SceneReplicationConfig.REPLICATION_MODE_ALWAYS
 	)
 
@@ -53,6 +57,11 @@ func configurar_sincronizacao() -> void:
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
+		# Jogador do outro: so desliza ate a posicao que chegou pela rede
+		if position.distance_to(posicao_rede) > 100:
+			position = posicao_rede
+		else:
+			position = position.lerp(posicao_rede, 0.3)
 		return
 
 	# Respawn do Player 1
@@ -66,12 +75,12 @@ func _physics_process(delta: float) -> void:
 
 	# Pulo
 	var janela_com_foco := DisplayServer.window_is_focused()
-	if janela_com_foco and Input.is_action_just_pressed("player1_jump") and is_on_floor():
+	if janela_com_foco and Input.is_action_just_pressed("player1_jump") and is_on_floor() and Global.pode_mexer == true:
 		velocity.y = JUMP_VELOCITY
 
 	# Direção do movimento
 	var direction := 0.0
-	if janela_com_foco:
+	if janela_com_foco and Global.pode_mexer == true:
 		direction = Input.get_axis("player1_left", "player1_right")
 
 	# Guarda a última direção
@@ -87,6 +96,9 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+	# Manda a posicao pela rede
+	posicao_rede = position
 
 	# Animações
 	if not is_on_floor():

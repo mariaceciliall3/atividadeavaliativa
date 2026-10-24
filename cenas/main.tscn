@@ -59,3 +59,69 @@ offset_top = 7.0
 offset_right = 1026.0
 offset_bottom = 30.0
 text = "Aguardando Conexão"
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1736201201]
+layer = 20
+
+[node name="PlacarLabel" type="Label" parent="Hud" unique_id=1736201202]
+offset_left = 20.0
+offset_top = 10.0
+offset_right = 520.0
+offset_bottom = 45.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Host: 0   x   Cliente: 0"
+
+[node name="ContagemLabel" type="Label" parent="Hud" unique_id=1736201203]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.2, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 80
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AvisoLabel" type="Label" parent="Hud" unique_id=1736201204]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = 70.0
+offset_right = 350.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RevancheButton" type="Button" parent="Hud" unique_id=1736201205]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -110.0
+offset_right = 100.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 28
+text = "REVANCHE"

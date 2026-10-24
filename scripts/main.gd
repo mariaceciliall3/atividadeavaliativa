@@ -29,6 +29,7 @@ func _ready() -> void:
 
 	$CanvasLayer/Interface/HostButton.pressed.connect(_on_host_button_pressed)
 	$CanvasLayer/Interface/JoinButton.pressed.connect(_on_join_button_pressed)
+	$Hud/RevancheButton.pressed.connect(_on_revanche_button_pressed)
 
 	$Level/portal.jogador_entrou.connect(_on_portal_jogador_entrou)
 
@@ -45,6 +46,7 @@ func host_game() -> void:
 	multiplayer.multiplayer_peer = peer
 
 	status_label.text = "Servidor criado. Aguardando jogador"
+	$Hud/AvisoLabel.text = "Esperando o outro jogador..."
 	print("Servidor iniciado. ID local: ", multiplayer.get_unique_id())
 
 	spawn_player(1)
@@ -91,6 +93,14 @@ func _on_server_disconnected() -> void:
 	status_label.text = "Conexão com o servidor encerrada"
 	print("Servidor desconectado")
 
+	# Desconexao: o host saiu, entao a rodada acaba
+	Global.pode_mexer = false
+	$Hud/ContagemLabel.text = ""
+	$Hud/AvisoLabel.text = "O host saiu da partida!"
+	$Hud/RevancheButton.visible = false
+	for jogador in players.get_children():
+		jogador.queue_free()
+
 
 func _on_peer_connected(id: int) -> void:
 	print("Peer conectado. ID recebido: ", id)
@@ -98,6 +108,10 @@ func _on_peer_connected(id: int) -> void:
 	if multiplayer.is_server():
 		spawn_player(id)
 		status_label.text = "Jogador conectado!"
+
+		# Manda o placar pro cliente e comeca a rodada nos dois
+		atualizar_placar.rpc(Global.vitorias_host, Global.vitorias_cliente)
+		comecar_rodada.rpc()
 
 
 func _on_peer_disconnected(id: int) -> void:
@@ -109,6 +123,13 @@ func _on_peer_disconnected(id: int) -> void:
 		jogador.queue_free()
 		status_label.text = "Jogador desconectado"
 		print("Jogador desconectado: ", id)
+
+		# Desconexao: o cliente saiu, entao a rodada acaba
+		Global.pode_mexer = false
+		$Hud/ContagemLabel.text = ""
+		$Hud/AvisoLabel.text = "O cliente saiu da partida!
+Esperando outro jogador..."
+		$Hud/RevancheButton.visible = false
 
 
 func spawn_player(id: int) -> void:
@@ -181,6 +202,13 @@ func _on_portal_jogador_entrou(body: Node2D) -> void:
 
 	var vencedor_id: int = body.name.to_int()
 	print("Vencedor decidido pelo servidor: ", vencedor_id)
+
+	# Placar: so o servidor conta e depois manda pros dois
+	if vencedor_id == 1:
+		Global.vitorias_host += 1
+	else:
+		Global.vitorias_cliente += 1
+	atualizar_placar.rpc(Global.vitorias_host, Global.vitorias_cliente)
 	_finalizar_com_vitoria.call_deferred(vencedor_id)
 
 
@@ -197,6 +225,8 @@ func anunciar_vencedor(vencedor_id: int) -> void:
 		return
 
 	match_finished = true
+	Global.pode_mexer = false
+	$Hud/RevancheButton.visible = true
 
 	var jogador_vencedor := players.get_node_or_null(str(vencedor_id)) as CharacterBody2D
 	if jogador_vencedor == null:
@@ -249,3 +279,84 @@ func _ajustar_tela_vitoria(tela_vitoria: Control) -> void:
 		for jogador in players.get_children():
 			if jogador.visible:
 				jogador.position.x = get_viewport_rect().size.x * 0.5
+
+
+# Placar: o servidor manda os numeros e todo mundo mostra
+@rpc("authority", "call_local", "reliable")
+func atualizar_placar(vitorias_host, vitorias_cliente) -> void:
+	Global.vitorias_host = vitorias_host
+	Global.vitorias_cliente = vitorias_cliente
+	$Hud/PlacarLabel.text = "Host: " + str(vitorias_host) + "   x   Cliente: " + str(vitorias_cliente)
+
+
+# Botao de revanche (qualquer um dos dois pode apertar)
+func _on_revanche_button_pressed() -> void:
+	# Pede pro servidor comecar outra rodada
+	pedir_revanche.rpc_id(1)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func pedir_revanche() -> void:
+	if not multiplayer.is_server():
+		return
+
+	# So tem revanche se a rodada acabou e os dois estao na partida
+	if match_finished == true and players.get_child_count() == 2:
+		comecar_rodada.rpc()
+
+
+# Comeca uma rodada nova (a primeira ou a revanche)
+@rpc("authority", "call_local", "reliable")
+func comecar_rodada() -> void:
+	match_finished = false
+	Global.pode_mexer = false
+	$Hud/RevancheButton.visible = false
+	$Hud/AvisoLabel.text = ""
+
+	# Tira a tela de vitoria se tiver
+	var tela_vitoria = get_node_or_null("VictoryOverlay")
+	if tela_vitoria != null:
+		get_viewport().size_changed.disconnect(_ajustar_tela_vitoria.bind(tela_vitoria))
+		tela_vitoria.queue_free()
+
+	# Volta a fase pro lugar
+	$Level.position = Vector2(0, 0)
+	$Level.visible = true
+	$CanvasLayer.visible = true
+
+	# Volta os dois jogadores pro comeco
+	for jogador in players.get_children():
+		jogador.visible = true
+		jogador.set_collision_layer(1)
+		jogador.set_collision_mask(1)
+		jogador.set_physics_process(true)
+		jogador.set_process(true)
+
+		if jogador.name == "1":
+			jogador.spawn_position = $SpawnHost.global_position
+		else:
+			jogador.spawn_position = $SpawnClient.global_position
+
+		# Cada um so mexe no seu jogador, o outro chega pela rede
+		if jogador.is_multiplayer_authority():
+			jogador.global_position = jogador.spawn_position
+			jogador.velocity = Vector2.ZERO
+
+	# Contagem regressiva (comeca junto nos dois porque vem do servidor)
+	$Hud/ContagemLabel.text = "3"
+	await get_tree().create_timer(1.0).timeout
+	$Hud/ContagemLabel.text = "2"
+	await get_tree().create_timer(1.0).timeout
+	$Hud/ContagemLabel.text = "1"
+	await get_tree().create_timer(1.0).timeout
+
+	# Se alguem saiu durante a contagem nao libera
+	if players.get_child_count() < 2:
+		$Hud/ContagemLabel.text = ""
+		return
+
+	$Hud/ContagemLabel.text = "VAI!"
+	Global.pode_mexer = true
+	await get_tree().create_timer(1.0).timeout
+	if $Hud/ContagemLabel.text == "VAI!":
+		$Hud/ContagemLabel.text = ""
